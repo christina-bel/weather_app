@@ -4,6 +4,8 @@ import 'package:weather_app/data/api/network/services/weather_api/weather_api_pa
 import 'package:weather_app/data/api/network/services/weather_api/weather_api_paths.dart';
 
 class WeatherApi extends ApiServiceBase {
+  WeatherApi({super.baseUrl = WeatherApiPaths.baseUrl});
+
   Future<Response> getWeather({
     required double lat,
     required double lon,

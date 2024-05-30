@@ -1,6 +1,6 @@
 abstract class LocationApiPaths {
   LocationApiPaths._();
 
-  static const _baseUrlGeocoding = 'geocoding-api.open-meteo.com';
-  static const search = '$_baseUrlGeocoding/v1/search';
+  static const baseUrl = 'geocoding-api.open-meteo.com';
+  static const search = '/v1/search';
 }

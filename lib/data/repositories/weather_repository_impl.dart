@@ -8,16 +8,17 @@ class WeatherRepositoryImpl extends IWeatherRepository {
   final WeatherApi _weatherApi;
 
   @override
-  Future<Weather?> getWeather({
+  Future<Weather> getWeather({
     required double lat,
     required double lon,
   }) async {
-    try {
-      final response = await _weatherApi.getWeather(lat: lat, lon: lon);
+    final response = await _weatherApi.getWeather(lat: lat, lon: lon);
 
-      return WeatherResponse.fromJson(response.data).currentWeather;
-    } catch (e) {
-      rethrow;
+    final currentWeather =
+        WeatherResponse.fromJson(response.data).currentWeather;
+    if (currentWeather == null) {
+      throw Exception('Not found current weather');
     }
+    return currentWeather;
   }
 }

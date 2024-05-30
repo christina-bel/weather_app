@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:weather_app/domain/models/weather/weather_condition.dart';
 
 part 'weather.freezed.dart';
 part 'weather.g.dart';
@@ -15,11 +16,16 @@ class WeatherResponse with _$WeatherResponse {
 
 @freezed
 class Weather with _$Weather {
+  const Weather._();
+
   const factory Weather({
     required double temperature,
-    @JsonKey(name: 'weathercode') required double weatherCode,
+    @JsonKey(name: 'weathercode') required int weatherCode,
+    String? location,
   }) = _Weather;
 
   factory Weather.fromJson(Map<String, Object?> json) =>
       _$WeatherFromJson(json);
+
+  WeatherCondition get condition => weatherCode.toCondition;
 }

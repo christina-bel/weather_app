@@ -8,15 +8,14 @@ class LocationRepositoryImpl extends ILocationRepository {
   final LocationApi _locationApi;
 
   @override
-  Future<Location?> getLocation(String name) async {
-    try {
-      final response = await _locationApi.getLocation(name);
+  Future<Location> getLocation(String city) async {
+    final response = await _locationApi.getLocation(city);
 
-      final location = LocationResponse.fromJson(response.data);
+    final location = LocationResponse.fromJson(response.data);
 
-      return location.results.isEmpty ? null : location.results.first;
-    } catch (e) {
-      rethrow;
+    if (location.results.isEmpty) {
+      throw Exception('Not found location');
     }
+    return location.results.first;
   }
 }

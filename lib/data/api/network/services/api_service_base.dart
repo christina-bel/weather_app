@@ -3,18 +3,24 @@ import 'package:weather_app/data/api/network/interceptors/logger_interceptor.dar
 
 /// Base api service with dio init
 abstract class ApiServiceBase {
+  static const _timeoutDuration = Duration(milliseconds: 30000);
+
+  late final Dio _dio;
+
   /// Constructor is needed to add interceptors
-  ApiServiceBase() {
+  ApiServiceBase({required String baseUrl}) {
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: baseUrl,
+        contentType: 'application/json',
+        connectTimeout: _timeoutDuration,
+        receiveTimeout: _timeoutDuration,
+      ),
+    );
     addInterceptors();
   }
 
-  final Dio dio = Dio(
-    BaseOptions(
-      contentType: 'application/json',
-      connectTimeout: const Duration(milliseconds: 30000),
-      receiveTimeout: const Duration(milliseconds: 30000),
-    ),
-  );
+  get dio => _dio;
 
-  Dio addInterceptors() => dio..interceptors.add(LoggerInterceptor());
+  Dio addInterceptors() => _dio..interceptors.add(LoggerInterceptor());
 }

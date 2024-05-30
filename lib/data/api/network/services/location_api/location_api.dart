@@ -5,6 +5,8 @@ import 'location_api_params.dart';
 import 'location_api_paths.dart';
 
 class LocationApi extends ApiServiceBase {
+  LocationApi({super.baseUrl = LocationApiPaths.baseUrl});
+
   Future<Response> getLocation(String name) async {
     final query = {
       LocationApiParams.name: name,
