@@ -7,7 +7,7 @@ import 'package:weather_app/weather_bloc_observer.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = const WeatherBlocObserver();
+  Bloc.observer = WeatherBlocObserver();
   runApp(
     WeatherApp(
       weatherRepository: WeatherRepositoryImpl(),

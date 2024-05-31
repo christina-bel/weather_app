@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/domain/bloc/weather_cubit.dart';
+import 'package:weather_app/domain/bloc/theme/theme_cubit.dart';
+import 'package:weather_app/domain/bloc/weather/weather_cubit.dart';
 import 'package:weather_app/presentation/search/search_page.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_states/empty_weather.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_states/error_weather.dart';
@@ -34,9 +35,9 @@ class _WeatherViewState extends State<WeatherView> {
       body: Center(
         child: BlocConsumer<WeatherCubit, WeatherState>(
           listener: (ctx, state) {
-            /*if (state.status.isSuccess) {
-              context.read<ThemeCubit>().updateTheme(state.weather);
-            }*/
+            if (state is CurrentWeather) {
+              ctx.read<ThemeCubit>().updateTheme(state.weather);
+            }
           },
           builder: (ctt, state) => state.when(
             initial: () => const EmptyWeather(),

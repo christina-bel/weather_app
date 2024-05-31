@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/domain/bloc/weather_cubit.dart';
+import 'package:weather_app/domain/bloc/weather/weather_cubit.dart';
 import 'package:weather_app/domain/repositories/location_repository.dart';
 import 'package:weather_app/domain/repositories/weather_repository.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_view.dart';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:weather_app/domain/bloc/theme/theme_cubit.dart';
 import 'package:weather_app/domain/repositories/location_repository.dart';
 import 'package:weather_app/domain/repositories/weather_repository.dart';
 import 'package:weather_app/presentation/weather/weather_page.dart';
@@ -16,33 +18,38 @@ class WeatherApp extends StatelessWidget {
   final ILocationRepository _locationRepository;
 
   @override
-  Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<IWeatherRepository>(
-            create: (_) => _weatherRepository),
-        RepositoryProvider<ILocationRepository>(
-            create: (_) => _locationRepository),
-      ],
-      child: const WeatherAppView(),
-    );
-  }
+  Widget build(BuildContext context) => MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<IWeatherRepository>(
+              create: (_) => _weatherRepository),
+          RepositoryProvider<ILocationRepository>(
+              create: (_) => _locationRepository),
+        ],
+        child: BlocProvider(
+          create: (_) => ThemeCubit(),
+          child: const WeatherAppView(),
+        ),
+      );
 }
 
 class WeatherAppView extends StatelessWidget {
   const WeatherAppView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+  Widget build(BuildContext context) => BlocBuilder<ThemeCubit, Color>(
+        builder: (ctx, color) => MaterialApp(
+          theme: ThemeData(
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: color,
+              primaryContainer: color,
+            ),
+            textTheme: GoogleFonts.rajdhaniTextTheme(),
+          ),
+          home: const WeatherPage(),
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-      ),
-      home: const WeatherPage(),
-    );
-  }
+      );
 }

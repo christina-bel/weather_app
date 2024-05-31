@@ -15,9 +15,9 @@ class WeatherBackground extends StatelessWidget {
             stops: const [0.25, 0.75, 0.90, 1.0],
             colors: [
               color,
-              color.brighten(),
-              color.brighten(33),
-              color.brighten(50),
+              color.brighten(30),
+              color.brighten(55),
+              color.brighten(80),
             ],
           ),
         ),
