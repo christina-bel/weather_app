@@ -3,16 +3,16 @@ import 'package:weather_app/domain/models/weather/weather.dart';
 import 'package:weather_app/domain/repositories/weather_repository.dart';
 
 class WeatherRepositoryImpl extends IWeatherRepository {
-  WeatherRepositoryImpl(this._weatherApi);
+  WeatherRepositoryImpl({WeatherApi? api}) : _api = api ?? WeatherApi();
 
-  final WeatherApi _weatherApi;
+  final WeatherApi _api;
 
   @override
   Future<Weather> getWeather({
     required double lat,
     required double lon,
   }) async {
-    final response = await _weatherApi.getWeather(lat: lat, lon: lon);
+    final response = await _api.getWeather(lat: lat, lon: lon);
 
     final currentWeather =
         WeatherResponse.fromJson(response.data).currentWeather;
