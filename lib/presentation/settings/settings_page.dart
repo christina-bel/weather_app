@@ -26,7 +26,7 @@ class SettingsPage extends StatelessWidget {
                 title: const Text('Temperature Units'),
                 isThreeLine: true,
                 subtitle: const Text(
-                  'Use metric measurements for temperature units.',
+                  'Use metric measurements for temperature units (°F/°C)',
                 ),
                 trailing: Switch(
                   value: state.units.isCelsius,
