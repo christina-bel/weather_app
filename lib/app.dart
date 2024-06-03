@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,6 +37,9 @@ class WeatherAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocBuilder<ThemeCubit, Color>(
         builder: (ctx, color) => MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           theme: ThemeData(
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.transparent,

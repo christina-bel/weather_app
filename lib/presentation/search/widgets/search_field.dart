@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/l10n/locale_keys.g.dart';
 
 class SearchField extends StatelessWidget {
   final TextEditingController _controller;
@@ -12,9 +14,9 @@ class SearchField extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: TextField(
             controller: _controller,
-            decoration: const InputDecoration(
-              labelText: 'City',
-              hintText: 'Chicago',
+            decoration: InputDecoration(
+              labelText: LocaleKeys.citySearchLabel.tr(),
+              hintText: LocaleKeys.citySearchHint.tr(),
             ),
           ),
         ),

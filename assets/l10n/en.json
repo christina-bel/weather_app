@@ -1,0 +1,12 @@
+{
+  "emptyWeatherTitle": "Please Select a City!",
+  "errorWeatherTitle": "Something went wrong!",
+  "loadingWeatherTitle": "Loading Weather...",
+  "populatedWeatherLastUpdated":"Last updated at {time}",
+  "settingsTitle":"Settings",
+  "temperatureUnitsTitle":"Temperature Units",
+  "temperatureUnitsSubtitle":"Use metric measurements for temperature units (°F/°C)",
+  "citySearchTitle":"City Search",
+  "citySearchLabel":"City",
+  "citySearchHint":"Chicago"
+}

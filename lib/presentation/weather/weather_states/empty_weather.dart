@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/l10n/locale_keys.g.dart';
 
 class EmptyWeather extends StatelessWidget {
   const EmptyWeather({super.key});
@@ -9,7 +11,7 @@ class EmptyWeather extends StatelessWidget {
         children: [
           const Text('🏙️', style: TextStyle(fontSize: 64)),
           Text(
-            'Please Select a City!',
+            LocaleKeys.emptyWeatherTitle.tr(),
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],

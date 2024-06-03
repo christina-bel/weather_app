@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/l10n/locale_keys.g.dart';
 
 class LoadingWeather extends StatelessWidget {
   const LoadingWeather({super.key});
@@ -9,7 +11,7 @@ class LoadingWeather extends StatelessWidget {
         children: [
           const Text('⛅', style: TextStyle(fontSize: 64)),
           Text(
-            'Loading Weather',
+            LocaleKeys.loadingWeatherTitle.tr(),
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           const Padding(

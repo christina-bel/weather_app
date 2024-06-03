@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/l10n/locale_keys.g.dart';
 import 'package:weather_app/presentation/search/widgets/search_button.dart';
 import 'package:weather_app/presentation/search/widgets/search_field.dart';
 
@@ -30,7 +32,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('City Search')),
+        appBar: AppBar(title: Text(LocaleKeys.settingsTitle.tr())),
         body: Row(
           children: [
             SearchField(controller: _textController),

@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/domain/models/temperature/temperature_units.dart';
 import 'package:weather_app/domain/models/weather/weather.dart';
+import 'package:weather_app/l10n/locale_keys.g.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_background.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_icon.dart';
 
@@ -50,8 +52,12 @@ class PopulatedWeather extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Last updated at '
-                    '${TimeOfDay.fromDateTime(_updated).format(context)}',
+                    LocaleKeys.populatedWeatherLastUpdated.tr(
+                      namedArgs: {
+                        'time':
+                            TimeOfDay.fromDateTime(_updated).format(context),
+                      },
+                    ),
                   ),
                 ],
               ),

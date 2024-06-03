@@ -1,0 +1,12 @@
+{
+  "emptyWeatherTitle": "Пожалуйста, выберите город!",
+  "errorWeatherTitle": "Что-то пошло не так!",
+  "loadingWeatherTitle": "Идет загрузка...",
+  "populatedWeatherLastUpdated":"Обновлено в {time}",
+  "settingsTitle":"Настройки",
+  "temperatureUnitsTitle":"Единицы температуры",
+  "temperatureUnitsSubtitle":"Использовать метрические измерения для единиц температуры (°F/°C)",
+  "citySearchTitle":"Поиск города",
+  "citySearchLabel":"Город",
+  "citySearchHint":"Чикаго"
+}
