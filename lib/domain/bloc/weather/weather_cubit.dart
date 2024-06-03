@@ -6,41 +6,81 @@ import 'package:weather_app/domain/repositories/location_repository.dart';
 import 'package:weather_app/domain/repositories/weather_repository.dart';
 
 part 'weather_cubit.freezed.dart';
+part 'weather_cubit.g.dart';
 part 'weather_state.dart';
 
+/// Class is used to manage weather state for the main purpose of yhe app.
 class WeatherCubit extends Cubit<WeatherState> {
-  final IWeatherRepository _weatherRepository;
-  final ILocationRepository _locationRepository;
+  final IWeatherRepository _weatherRepo;
+  final ILocationRepository _locationRepo;
 
-  WeatherCubit(this._weatherRepository, this._locationRepository)
-      : super(const Initial());
+  WeatherCubit(this._weatherRepo, this._locationRepo)
+      : super(WeatherState.initial());
 
+  /// Method is used for retrieving a weather object for the given city
   Future<void> fetchWeather(String city) async {
     if (city.isEmpty) {
       return;
     }
 
-    _changeState(const Loading());
-
+    _changeState(status: WeatherStatus.loading, weather: Weather.empty());
     try {
-      final location = await _locationRepository.getLocation(city);
+      final location = await _locationRepo.getLocation(city);
 
-      final weather = await _weatherRepository.getWeather(
+      final weather = await _weatherRepo.getWeather(
         lat: location.latitude,
         lon: location.longitude,
       );
 
+      final units = state.units;
+      final temp = units.isFahrenheit
+          ? weather.temperature.toFahrenheit()
+          : weather.temperature;
+
       _changeState(
-        CurrentWeather(
-          weather: weather.copyWith(location: city),
-          lastUpdated: DateTime.now(),
-          temperatureUnits: TemperatureUnits.celsius,
-        ),
+        status: WeatherStatus.success,
+        units: units,
+        weather: weather.copyWith(location: city, temperature: temp),
+        updated: DateTime.now(),
       );
     } catch (e) {
-      _changeState(Failure(e.toString()));
+      _changeState(status: WeatherStatus.failure, weather: Weather.empty());
     }
   }
 
-  void _changeState(WeatherState newState) => emit(newState);
+  /// Toggles the state between Celsius and Fahrenheit units
+  void toggleUnits() {
+    final units = state.units.isFahrenheit
+        ? TemperatureUnits.celsius
+        : TemperatureUnits.fahrenheit;
+
+    if (!state.status.isSuccess) {
+      _changeState(units: units);
+      return;
+    }
+
+    final weather = state.weather;
+    final temp = units.isCelsius
+        ? weather.temperature.toCelsius()
+        : weather.temperature.toFahrenheit();
+    _changeState(
+      units: units,
+      weather: weather.copyWith(temperature: temp),
+    );
+  }
+
+  void _changeState({
+    WeatherStatus? status,
+    TemperatureUnits? units,
+    Weather? weather,
+    DateTime? updated,
+  }) =>
+      emit(
+        state.copyWith(
+          status: status ?? state.status,
+          units: units ?? state.units,
+          weather: weather ?? state.weather,
+          lastUpdated: updated ?? state.lastUpdated,
+        ),
+      );
 }

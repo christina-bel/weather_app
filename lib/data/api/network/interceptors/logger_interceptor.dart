@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
+/// Custom interceptor for logging network requests
 class LoggerInterceptor extends Interceptor {
-  final Logger logger = Logger();
+  final _logger = Logger();
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    logger.i(
+    _logger.i(
       '<-- REQUEST[${options.method.toUpperCase()}] => URL: '
       '${options.baseUrl + options.path} => DATA: ${options.data} -->',
     );
@@ -18,7 +19,7 @@ class LoggerInterceptor extends Interceptor {
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     final requestOptions = response.requestOptions;
 
-    logger.t(
+    _logger.t(
       '<-- RESPONSE[${response.statusCode}] : DATA ${response.data} => URL: '
       '${requestOptions.baseUrl}${requestOptions.path} -->',
     );
@@ -31,7 +32,7 @@ class LoggerInterceptor extends Interceptor {
     final response = err.response;
     final requestOptions = response?.requestOptions;
 
-    logger.e(
+    _logger.e(
       '<-- ERROR[${response?.statusCode}] : MESSAGE[${err.message}] => URL: '
       '${requestOptions?.baseUrl}${requestOptions?.path} -> '
       'DATA: ${response?.data} -->',

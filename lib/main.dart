@@ -10,8 +10,8 @@ void main() {
   Bloc.observer = WeatherBlocObserver();
   runApp(
     WeatherApp(
-      weatherRepository: WeatherRepositoryImpl(),
-      locationRepository: LocationRepositoryImpl(),
+      weatherRepo: WeatherRepositoryImpl(),
+      locationRepo: LocationRepositoryImpl(),
     ),
   );
 }

@@ -9,13 +9,11 @@ class WeatherPage extends StatelessWidget {
   const WeatherPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (ctx) => WeatherCubit(
-        ctx.read<IWeatherRepository>(),
-        ctx.read<ILocationRepository>(),
-      ),
-      child: const WeatherView(),
-    );
-  }
+  Widget build(BuildContext context) => BlocProvider(
+        create: (ctx) => WeatherCubit(
+          ctx.read<IWeatherRepository>(),
+          ctx.read<ILocationRepository>(),
+        ),
+        child: const WeatherView(),
+      );
 }

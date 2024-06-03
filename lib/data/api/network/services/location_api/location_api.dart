@@ -4,6 +4,7 @@ import 'package:weather_app/data/api/network/services/api_service_base.dart';
 import 'location_api_params.dart';
 import 'location_api_paths.dart';
 
+/// Class is used for manipulating with api calls for current location
 class LocationApi extends ApiServiceBase {
   LocationApi({super.baseUrl = LocationApiPaths.baseUrl});
 

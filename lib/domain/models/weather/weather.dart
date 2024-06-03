@@ -27,5 +27,7 @@ class Weather with _$Weather {
   factory Weather.fromJson(Map<String, Object?> json) =>
       _$WeatherFromJson(json);
 
+  factory Weather.empty() => const Weather(temperature: -1, weatherCode: -1);
+
   WeatherCondition get condition => weatherCode.toCondition;
 }

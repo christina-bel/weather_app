@@ -3,9 +3,9 @@ import 'package:weather_app/domain/models/weather/weather.dart';
 import 'package:weather_app/domain/repositories/weather_repository.dart';
 
 class WeatherRepositoryImpl extends IWeatherRepository {
-  WeatherRepositoryImpl({WeatherApi? api}) : _api = api ?? WeatherApi();
-
   final WeatherApi _api;
+
+  WeatherRepositoryImpl({WeatherApi? api}) : _api = api ?? WeatherApi();
 
   @override
   Future<Weather> getWeather({
@@ -14,11 +14,10 @@ class WeatherRepositoryImpl extends IWeatherRepository {
   }) async {
     final response = await _api.getWeather(lat: lat, lon: lon);
 
-    final currentWeather =
-        WeatherResponse.fromJson(response.data).currentWeather;
-    if (currentWeather == null) {
+    final weather = WeatherResponse.fromJson(response.data).currentWeather;
+    if (weather == null) {
       throw Exception('Not found current weather');
     }
-    return currentWeather;
+    return weather;
   }
 }

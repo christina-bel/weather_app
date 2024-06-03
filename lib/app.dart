@@ -7,23 +7,21 @@ import 'package:weather_app/domain/repositories/weather_repository.dart';
 import 'package:weather_app/presentation/weather/weather_page.dart';
 
 class WeatherApp extends StatelessWidget {
-  const WeatherApp({
-    required IWeatherRepository weatherRepository,
-    required ILocationRepository locationRepository,
-    super.key,
-  })  : _weatherRepository = weatherRepository,
-        _locationRepository = locationRepository;
+  final IWeatherRepository _weatherRepo;
+  final ILocationRepository _locationRepo;
 
-  final IWeatherRepository _weatherRepository;
-  final ILocationRepository _locationRepository;
+  const WeatherApp({
+    required IWeatherRepository weatherRepo,
+    required ILocationRepository locationRepo,
+    super.key,
+  })  : _weatherRepo = weatherRepo,
+        _locationRepo = locationRepo;
 
   @override
   Widget build(BuildContext context) => MultiRepositoryProvider(
         providers: [
-          RepositoryProvider<IWeatherRepository>(
-              create: (_) => _weatherRepository),
-          RepositoryProvider<ILocationRepository>(
-              create: (_) => _locationRepository),
+          RepositoryProvider<IWeatherRepository>(create: (_) => _weatherRepo),
+          RepositoryProvider<ILocationRepository>(create: (_) => _locationRepo),
         ],
         child: BlocProvider(
           create: (_) => ThemeCubit(),

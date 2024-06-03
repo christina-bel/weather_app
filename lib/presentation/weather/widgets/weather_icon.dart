@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/domain/models/weather/weather_condition.dart';
 
 class WeatherIcon extends StatelessWidget {
-  const WeatherIcon({required this.condition, super.key});
-
   static const _iconSize = 75.0;
 
-  final WeatherCondition condition;
+  final WeatherCondition _condition;
+
+  const WeatherIcon({required WeatherCondition condition, super.key})
+      : _condition = condition;
 
   @override
-  Widget build(BuildContext context) {
-    return Text(
-      condition.toEmoji,
-      style: const TextStyle(fontSize: _iconSize),
-    );
-  }
+  Widget build(BuildContext context) => Text(
+        _condition.toEmoji,
+        style: const TextStyle(fontSize: _iconSize),
+      );
 }
 
 extension on WeatherCondition {

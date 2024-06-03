@@ -1,28 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/domain/models/temperature/temperature_units.dart';
 import 'package:weather_app/domain/models/weather/weather.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_background.dart';
 import 'package:weather_app/presentation/weather/widgets/weather_icon.dart';
 
 class PopulatedWeather extends StatelessWidget {
-  const PopulatedWeather({
-    required this.weather,
-    required this.lastUpdated,
-    required this.onRefresh,
-    super.key,
-  });
+  final Weather _weather;
+  final DateTime _updated;
+  final TemperatureUnits _units;
+  final ValueGetter<Future<void>> _onRefresh;
 
-  final Weather weather;
-  final DateTime lastUpdated;
-  final ValueGetter<Future<void>> onRefresh;
+  const PopulatedWeather({
+    required Weather weather,
+    required DateTime updated,
+    required TemperatureUnits units,
+    required Future<void> Function() onRefresh,
+    super.key,
+  })  : _onRefresh = onRefresh,
+        _units = units,
+        _updated = updated,
+        _weather = weather;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final textTheme = Theme.of(context).textTheme;
     return Stack(
       children: [
         const WeatherBackground(),
         RefreshIndicator(
-          onRefresh: onRefresh,
+          onRefresh: _onRefresh,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             clipBehavior: Clip.none,
@@ -30,21 +36,22 @@ class PopulatedWeather extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 48),
-                  WeatherIcon(condition: weather.condition),
+                  WeatherIcon(condition: _weather.condition),
                   Text(
-                    weather.location ?? '',
-                    style: theme.textTheme.displayMedium?.copyWith(
+                    _weather.location ?? '',
+                    style: textTheme.displayMedium?.copyWith(
                       fontWeight: FontWeight.w200,
                     ),
                   ),
                   Text(
-                    '${weather.temperature.toStringAsPrecision(2)}°C',
-                    style: theme.textTheme.displaySmall?.copyWith(
+                    formattedTemperature(_weather.temperature, _units),
+                    style: textTheme.displaySmall?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    'Last Updated at ${TimeOfDay.fromDateTime(lastUpdated).format(context)}',
+                    'Last updated at '
+                    '${TimeOfDay.fromDateTime(_updated).format(context)}',
                   ),
                 ],
               ),
@@ -54,4 +61,7 @@ class PopulatedWeather extends StatelessWidget {
       ],
     );
   }
+
+  String formattedTemperature(double temp, TemperatureUnits units) =>
+      '${temp.toStringAsPrecision(2)}°${units.isCelsius ? 'C' : 'F'}';
 }

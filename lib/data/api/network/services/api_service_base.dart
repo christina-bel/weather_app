@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:weather_app/data/api/network/interceptors/logger_interceptor.dart';
 
 /// Base api service with dio init
@@ -7,7 +8,6 @@ abstract class ApiServiceBase {
 
   late final Dio _dio;
 
-  /// Constructor is needed to add interceptors
   ApiServiceBase({required String baseUrl}) {
     _dio = Dio(
       BaseOptions(
@@ -17,10 +17,15 @@ abstract class ApiServiceBase {
         receiveTimeout: _timeoutDuration,
       ),
     );
-    addInterceptors();
+    _addInterceptors();
   }
 
   get dio => _dio;
 
-  Dio addInterceptors() => _dio..interceptors.add(LoggerInterceptor());
+  /// Method for adding all necessary interceptors for dio
+  void _addInterceptors() {
+    if (kDebugMode) {
+      _dio.interceptors.add(LoggerInterceptor());
+    }
+  }
 }
