@@ -1,5 +1,5 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:weather_app/domain/models/temperature/temperature_units.dart';
 import 'package:weather_app/domain/models/weather/weather.dart';
 import 'package:weather_app/domain/repositories/location_repository.dart';
@@ -10,12 +10,19 @@ part 'weather_cubit.g.dart';
 part 'weather_state.dart';
 
 /// Class is used to manage weather state for the main purpose of yhe app.
-class WeatherCubit extends Cubit<WeatherState> {
+class WeatherCubit extends HydratedCubit<WeatherState> {
   final IWeatherRepository _weatherRepo;
   final ILocationRepository _locationRepo;
 
   WeatherCubit(this._weatherRepo, this._locationRepo)
       : super(WeatherState.initial());
+
+  @override
+  WeatherState fromJson(Map<String, dynamic> json) =>
+      WeatherState.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson(WeatherState state) => state.toJson();
 
   /// Method is used for retrieving a weather object for the given city
   Future<void> fetchWeather(String city) async {
