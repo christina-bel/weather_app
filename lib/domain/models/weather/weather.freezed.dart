@@ -184,7 +184,7 @@ mixin _$Weather {
   double get temperature => throw _privateConstructorUsedError;
   @JsonKey(name: 'weathercode')
   int get weatherCode => throw _privateConstructorUsedError;
-  String? get location => throw _privateConstructorUsedError;
+  Location? get location => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -199,7 +199,9 @@ abstract class $WeatherCopyWith<$Res> {
   $Res call(
       {double temperature,
       @JsonKey(name: 'weathercode') int weatherCode,
-      String? location});
+      Location? location});
+
+  $LocationCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -231,8 +233,20 @@ class _$WeatherCopyWithImpl<$Res, $Val extends Weather>
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Location?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LocationCopyWith<$Res>? get location {
+    if (_value.location == null) {
+      return null;
+    }
+
+    return $LocationCopyWith<$Res>(_value.location!, (value) {
+      return _then(_value.copyWith(location: value) as $Val);
+    });
   }
 }
 
@@ -246,7 +260,10 @@ abstract class _$$WeatherImplCopyWith<$Res> implements $WeatherCopyWith<$Res> {
   $Res call(
       {double temperature,
       @JsonKey(name: 'weathercode') int weatherCode,
-      String? location});
+      Location? location});
+
+  @override
+  $LocationCopyWith<$Res>? get location;
 }
 
 /// @nodoc
@@ -276,7 +293,7 @@ class __$$WeatherImplCopyWithImpl<$Res>
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Location?,
     ));
   }
 }
@@ -299,7 +316,7 @@ class _$WeatherImpl extends _Weather {
   @JsonKey(name: 'weathercode')
   final int weatherCode;
   @override
-  final String? location;
+  final Location? location;
 
   @override
   String toString() {
@@ -342,7 +359,7 @@ abstract class _Weather extends Weather {
   const factory _Weather(
       {required final double temperature,
       @JsonKey(name: 'weathercode') required final int weatherCode,
-      final String? location}) = _$WeatherImpl;
+      final Location? location}) = _$WeatherImpl;
   const _Weather._() : super._();
 
   factory _Weather.fromJson(Map<String, dynamic> json) = _$WeatherImpl.fromJson;
@@ -353,7 +370,7 @@ abstract class _Weather extends Weather {
   @JsonKey(name: 'weathercode')
   int get weatherCode;
   @override
-  String? get location;
+  Location? get location;
   @override
   @JsonKey(ignore: true)
   _$$WeatherImplCopyWith<_$WeatherImpl> get copyWith =>

@@ -40,7 +40,7 @@ class PopulatedWeather extends StatelessWidget {
                   const SizedBox(height: 48),
                   WeatherIcon(condition: _weather.condition),
                   Text(
-                    _weather.location ?? '',
+                    _weather.locationName,
                     style: textTheme.displayMedium?.copyWith(
                       fontWeight: FontWeight.w200,
                     ),

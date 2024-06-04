@@ -1,6 +1,6 @@
 # weather_app
 
-App shows current weather of the chosen city using BLoC state management
+App shows current weather of the chosen city using BLoC state management and Easy localization.
 
 ## Project Requirements
 App should let users

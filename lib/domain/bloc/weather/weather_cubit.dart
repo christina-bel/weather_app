@@ -25,14 +25,14 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
   Map<String, dynamic> toJson(WeatherState state) => state.toJson();
 
   /// Method is used for retrieving a weather object for the given city
-  Future<void> fetchWeather(String city) async {
-    if (city.isEmpty) {
+  Future<void> fetchWeather(String name) async {
+    if (name.isEmpty) {
       return;
     }
 
     _changeState(status: WeatherStatus.loading, weather: Weather.empty());
     try {
-      final location = await _locationRepo.getLocation(city);
+      final location = await _locationRepo.getLocation(name);
 
       final weather = await _weatherRepo.getWeather(
         lat: location.latitude,
@@ -40,19 +40,48 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
       );
 
       final units = state.units;
-      final temp = units.isFahrenheit
+      final temperature = units.isFahrenheit
           ? weather.temperature.toFahrenheit()
           : weather.temperature;
 
       _changeState(
         status: WeatherStatus.success,
         units: units,
-        weather: weather.copyWith(location: city, temperature: temp),
+        weather: weather.copyWith(
+          location: location.copyWith(name: name),
+          temperature: temperature,
+        ),
         updated: DateTime.now(),
       );
     } catch (e) {
       _changeState(status: WeatherStatus.failure, weather: Weather.empty());
     }
+  }
+
+  /// Method is used for retrieving a new weather object using
+  /// the weather repository given the current weather state
+  Future<void> refreshWeather() async {
+    final location = state.weather.location;
+    if (!state.status.isSuccess || location == null) return;
+
+    try {
+      final weather = await _weatherRepo.getWeather(
+        lat: location.latitude,
+        lon: location.longitude,
+      );
+
+      final units = state.units;
+      final temperature = units.isFahrenheit
+          ? weather.temperature.toFahrenheit()
+          : weather.temperature;
+
+      _changeState(
+        status: WeatherStatus.success,
+        units: units,
+        weather: weather.copyWith(location: location, temperature: temperature),
+        updated: DateTime.now(),
+      );
+    } catch (_) {}
   }
 
   /// Toggles the state between Celsius and Fahrenheit units
@@ -67,12 +96,12 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
     }
 
     final weather = state.weather;
-    final temp = units.isCelsius
+    final temperature = units.isCelsius
         ? weather.temperature.toCelsius()
         : weather.temperature.toFahrenheit();
     _changeState(
       units: units,
-      weather: weather.copyWith(temperature: temp),
+      weather: weather.copyWith(temperature: temperature),
     );
   }
 

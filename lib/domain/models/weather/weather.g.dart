@@ -24,7 +24,9 @@ _$WeatherImpl _$$WeatherImplFromJson(Map<String, dynamic> json) =>
     _$WeatherImpl(
       temperature: (json['temperature'] as num).toDouble(),
       weatherCode: (json['weathercode'] as num).toInt(),
-      location: json['location'] as String?,
+      location: json['location'] == null
+          ? null
+          : Location.fromJson(json['location'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$WeatherImplToJson(_$WeatherImpl instance) =>

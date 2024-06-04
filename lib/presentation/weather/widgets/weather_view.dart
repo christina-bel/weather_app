@@ -49,7 +49,7 @@ class _WeatherViewState extends State<WeatherView> {
                     weather: state.weather,
                     units: state.units,
                     updated: state.lastUpdated ?? DateTime.now(),
-                    onRefresh: () async {},
+                    onRefresh: () => ctx.read<WeatherCubit>().refreshWeather(),
                   );
                 case WeatherStatus.failure:
                   return const ErrorWeather();
