@@ -36,6 +36,8 @@ class MockWeatherCubit extends MockCubit<WeatherState>
 void main() {
   initHydratedStorage();
 
+  const searchCity = 'Chicago';
+
   const weather = Weather(
     temperature: 4.2,
     weatherCode: 1,
@@ -237,8 +239,6 @@ void main() {
       });
 
       testWidgets('Triggers fetch on search pop', (tester) async {
-        const city = 'Chicago';
-
         when(() => weatherCubit.state).thenReturn(WeatherState.initial());
         when(() => weatherCubit.fetchWeather(any())).thenAnswer((_) async {});
 
@@ -251,10 +251,10 @@ void main() {
 
         await tester.tap(find.byType(FloatingActionButton));
         await tester.pumpAndSettle();
-        await tester.enterText(find.byType(TextField), city);
+        await tester.enterText(find.byType(TextField), searchCity);
         await tester.tap(find.byKey(SearchButton.buttonKey));
         await tester.pumpAndSettle();
-        verify(() => weatherCubit.fetchWeather(city)).called(1);
+        verify(() => weatherCubit.fetchWeather(searchCity)).called(1);
       });
     },
   );
