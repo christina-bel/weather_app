@@ -6,7 +6,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:weather_app/app.dart';
 import 'package:weather_app/data/repositories/location_repository_impl.dart';
 import 'package:weather_app/data/repositories/weather_repository_impl.dart';
-import 'package:weather_app/weather_bloc_observer.dart';
+import 'package:weather_app/domain/bloc/weather_bloc_observer.dart';
+import 'package:weather_app/domain/untils/localization_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +19,8 @@ void main() async {
         : await getTemporaryDirectory(),
   );
   runApp(
-    EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('ru')],
-      path: 'assets/l10n',
-      fallbackLocale: const Locale('en'),
-      child: WeatherApp(
+    EasyLocalizationHelper.wrap(
+      WeatherApp(
         weatherRepo: WeatherRepositoryImpl(),
         locationRepo: LocationRepositoryImpl(),
       ),

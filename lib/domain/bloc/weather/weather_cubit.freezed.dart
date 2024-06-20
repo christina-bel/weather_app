@@ -149,7 +149,8 @@ class __$$WeatherStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(explicitToJson: true)
 class _$WeatherStateImpl implements _WeatherState {
   const _$WeatherStateImpl(
       {required this.status,

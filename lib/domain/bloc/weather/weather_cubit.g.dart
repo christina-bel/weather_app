@@ -20,7 +20,7 @@ Map<String, dynamic> _$$WeatherStateImplToJson(_$WeatherStateImpl instance) =>
     <String, dynamic>{
       'status': _$WeatherStatusEnumMap[instance.status]!,
       'units': _$TemperatureUnitsEnumMap[instance.units]!,
-      'weather': instance.weather,
+      'weather': instance.weather.toJson(),
       'lastUpdated': instance.lastUpdated?.toIso8601String(),
     };
 

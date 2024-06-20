@@ -11,6 +11,7 @@ extension WeatherStatusX on WeatherStatus {
 
 @freezed
 class WeatherState with _$WeatherState {
+  @JsonSerializable(explicitToJson: true)
   const factory WeatherState({
     required WeatherStatus status,
     required TemperatureUnits units,

@@ -48,7 +48,7 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
         status: WeatherStatus.success,
         units: units,
         weather: weather.copyWith(
-          location: location.copyWith(name: name),
+          location: location,
           temperature: temperature,
         ),
         updated: DateTime.now(),
@@ -81,7 +81,9 @@ class WeatherCubit extends HydratedCubit<WeatherState> {
         weather: weather.copyWith(location: location, temperature: temperature),
         updated: DateTime.now(),
       );
-    } catch (_) {}
+    } catch (_) {
+      print('fff');
+    }
   }
 
   /// Toggles the state between Celsius and Fahrenheit units

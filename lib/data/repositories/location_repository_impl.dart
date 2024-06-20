@@ -15,6 +15,9 @@ class LocationRepositoryImpl extends ILocationRepository {
     if (location.results.isEmpty) {
       throw Exception('Not found location');
     }
-    return location.results.first;
+
+    // Save passed name as it saves localization input
+    // (e.g. "Москва" stays as it is, not "Moskva" from API response)
+    return location.results.first.copyWith(name: name);
   }
 }
